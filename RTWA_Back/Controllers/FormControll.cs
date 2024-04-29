@@ -28,6 +28,7 @@ namespace RTWA_Back.Controllers
             try
             {
                 var form = _context.FormControlls.Where(e => e.Type == Type).ToList();
+                
                 return Ok(form);
             }
             catch (Exception ex)

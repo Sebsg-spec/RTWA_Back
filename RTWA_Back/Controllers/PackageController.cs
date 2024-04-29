@@ -24,6 +24,42 @@ namespace RTWA_Back.Controllers
             _context = context;
             _config = config;
         }
+        [HttpGet("GetData")]
+        public IActionResult GetData()
+        {
+            try
+            {
+                var data = _context.Package.ToList();
+
+                return Ok(data);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error from function GetDataByType(int type) : {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetDataByDate/{startDate}")]
+        public IActionResult GetData(DateTime startDate)
+        {
+            try
+            {
+                // Extract only the date part of the provided startDate
+                DateTime startDateOnly = startDate.Date;
+
+                var data = _context.Package.Where(e => e.StartDate.Date <= startDateOnly && e.EndDate >= startDateOnly);
+
+                return Ok(data);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error from function GetDataByType(int type) : {ex.Message}");
+            }
+        }
+
+
 
         //Function to get the main tables on the demand and offer pages 
         [HttpGet("GetDataByType/{type}")]

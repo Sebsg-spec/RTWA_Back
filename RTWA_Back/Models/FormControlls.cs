@@ -10,7 +10,7 @@ namespace RTWA_Back.Models
 
         public string? Value { get; set; }
 
-        [Key, AutoIncrement] public int? Id {  get; set; }
+        [Key] public long? Id {  get; set; }
 
 
     }
