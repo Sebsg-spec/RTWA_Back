@@ -9,7 +9,7 @@ using StringLengthAttribute = System.ComponentModel.DataAnnotations.StringLength
 
 namespace RTWA_Back.Models;
 
-public class IDM_ROLES
+public class ROLES
 {
 
     [Key] public int Role_Id { get; set; }

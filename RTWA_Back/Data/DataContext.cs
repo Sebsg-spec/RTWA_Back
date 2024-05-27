@@ -17,11 +17,11 @@ namespace RTWA_Back.Data
 
         public DbSet<PackageDetailsHistory> PackageDetailsHistory => Set<PackageDetailsHistory>();
 
-        public DbSet<IDM_ACCOUNTS>IDM_ACCOUNTS => Set<IDM_ACCOUNTS>();
+        public DbSet<ACCOUNTS>ACCOUNTS => Set<ACCOUNTS>();
 
-        public DbSet<IDM_ROLES> IDM_ROLES => Set<IDM_ROLES>();
+        public DbSet<ROLES> ROLES => Set<ROLES>();
 
-        public DbSet<IDM_RELATIONS> IDM_RELATIONS => Set<IDM_RELATIONS>();
+        public DbSet<RELATIONS> RELATIONS => Set<RELATIONS>();
 
         public DbSet<FormControlls> FormControlls => Set<FormControlls>();
 

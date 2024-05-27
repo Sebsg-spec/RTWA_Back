@@ -46,9 +46,9 @@ namespace RTWA_Back.Controllers
             //Get the user role based on the account id
             try
             {
-                var userRoles = await _context.IDM_RELATIONS
+                var userRoles = await _context.RELATIONS
                     .Where(r => r.Account_Id == accountId)
-                    .Join(_context.IDM_ROLES,
+                    .Join(_context.ROLES,
                           relation => relation.Role_Id,
                           role => role.Role_Id,
                           (relation, role) => role.role_name)
@@ -121,24 +121,24 @@ namespace RTWA_Back.Controllers
 
                 if (roleUpgrade != null)
                 {
-                    // Check if IDM_RELATIONS record already exists for the account_id
-                    var idmRelation = await _context.IDM_RELATIONS
+                    // Check if RELATIONS record already exists for the account_id
+                    var idmRelation = await _context.RELATIONS
                         .FirstOrDefaultAsync(r => r.Account_Id == roleUpgrade.Account_id);
 
                     if (idmRelation != null)
                     {
                         // Delete the existing record
-                        _context.IDM_RELATIONS.Remove(idmRelation);
+                        _context.RELATIONS.Remove(idmRelation);
 
                         // Create a new record with the updated Role_Id
-                        idmRelation = new IDM_RELATIONS { Account_Id = roleUpgrade.Account_id, Role_Id = roleUpgrade.RoleRequestedId };
-                        _context.IDM_RELATIONS.Add(idmRelation);
+                        idmRelation = new RELATIONS { Account_Id = roleUpgrade.Account_id, Role_Id = roleUpgrade.RoleRequestedId };
+                        _context.RELATIONS.Add(idmRelation);
                     }
                     else
                     {
                         // Create new record
-                        idmRelation = new IDM_RELATIONS { Account_Id = roleUpgrade.Account_id, Role_Id = roleUpgrade.RoleRequestedId };
-                        _context.IDM_RELATIONS.Add(idmRelation);
+                        idmRelation = new RELATIONS { Account_Id = roleUpgrade.Account_id, Role_Id = roleUpgrade.RoleRequestedId };
+                        _context.RELATIONS.Add(idmRelation);
                     }
                     _context.RoleUpgrade.Remove(roleUpgrade);
                     await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace RTWA_Back.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update IDM_RELATIONS table.", ex);
+                throw new Exception("Failed to update RELATIONS table.", ex);
             }
         }
 

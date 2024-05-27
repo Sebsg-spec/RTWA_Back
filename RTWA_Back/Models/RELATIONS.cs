@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RTWA_Back.Models;
 
-public class IDM_RELATIONS
+public class RELATIONS
 {
     [Key]
     public long? Role_Id { get; set; }
