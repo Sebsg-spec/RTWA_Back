@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using RTWA_Back.Data;
 using RTWA_Back.Models;
+using ServiceStack.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace RTWA_Back.Controllers
         {
             try
             {
-                var isUserExist = _context.IDM_ACCOUNTS.FirstOrDefault(m => m.Email == obj.Email && m.Password == obj.password);
+                var isUserExist = _context.ACCOUNTS.FirstOrDefault(m => m.Email == obj.Email && m.Password == obj.password);
 
                 if (isUserExist != null)
                 {
@@ -49,11 +50,11 @@ namespace RTWA_Back.Controllers
         }
 
         [HttpPost("Register")] 
-        public async Task<ActionResult<List<IDM_ACCOUNTS>>> Register(IDM_ACCOUNTS obj)
+        public async Task<ActionResult<List<ACCOUNTS>>> Register(ACCOUNTS obj)
         {
             try
             {
-                var isUserExists = await _context.IDM_ACCOUNTS
+                var isUserExists = await _context.ACCOUNTS
                     .AnyAsync(m => m.Email == obj.Email && m.Password == obj.Password && m.FullName == obj.FullName);
 
                 if (isUserExists)
@@ -63,19 +64,21 @@ namespace RTWA_Back.Controllers
                 }
                 else
                 {
-                    _context.IDM_ACCOUNTS.Add(obj);
+                    var message = "Account created successfully";
+                   
+                    _context.ACCOUNTS.Add(obj);
                     await _context.SaveChangesAsync();
 
-                    var newRelation = new IDM_RELATIONS
+                    var newRelation = new RELATIONS
                     {
                         Account_Id = obj.Account_Id.ToString(), 
-                        Role_Id = 4 
+                        Role_Id = 4
                     };
 
-                    _context.IDM_RELATIONS.Add(newRelation);
+                    _context.RELATIONS.Add(newRelation);
                     await _context.SaveChangesAsync();
 
-                    return Ok();
+                    return Ok(new { Message = message });
                 }
             }
             catch (Exception ex)

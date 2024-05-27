@@ -3,7 +3,7 @@ using ServiceStack.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
 
 namespace RTWA_Back.Models;
-public class IDM_ACCOUNTS
+public class ACCOUNTS
 {
   [Key, AutoIncrement] public int? Account_Id { get; set; } = null;
    
